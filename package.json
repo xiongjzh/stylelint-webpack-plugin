@@ -48,6 +48,7 @@
     "stylelint": "^5.0.1"
   },
   "scripts": {
-    "test": "mocha --harmony --full-trace --check-leaks -w"
+    "test": "mocha --harmony --full-trace --check-leaks",
+    "preversion": "npm run test"
   }
 }
