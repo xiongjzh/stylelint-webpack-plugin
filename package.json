@@ -1,0 +1,53 @@
+{
+  "name": "stylelint-webpack-plugin",
+  "version": "0.0.1",
+  "description": "stylelint plugin for webpack",
+  "main": "index.js",
+  "keywords": [
+    "stylelint",
+    "lint",
+    "linter",
+    "node-sass",
+    "webpack",
+    "plugin",
+    "webpack-plugin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vieron/stylelint-webpack-plugin.git"
+  },
+  "author": "Javier Sánchez-Marín <javiersanchezmarin@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vieron/stylelint-webpack-plugin/issues"
+  },
+  "homepage": "https://github.com/vieron/stylelint-webpack-plugin#readme",
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "loader-utils": "~0.2.10",
+    "node-sass": "^3.3.3",
+    "object-assign": "~3.0.0",
+    "stylelint": "^5.0.1",
+    "text-table": "^0.2.0",
+    "webpack": "^1.12.10"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "chai-as-promised": "^5.2.0",
+    "css-loader": "^0.19.0",
+    "file-loader": "^0.8.5",
+    "memory-fs": "^0.3.0",
+    "mocha": "^2.3.4",
+    "mocha-lcov-reporter": "^1.0.0",
+    "sass-loader": "^2.0.1",
+    "style-loader": "^0.12.4",
+    "text-table": "^0.2.0"
+  },
+  "peerDependencies": {
+    "stylelint": "^5.0.1"
+  },
+  "scripts": {
+    "test": "mocha --harmony --full-trace --check-leaks -w"
+  }
+}
