@@ -36,6 +36,13 @@ function apply(options, compiler) {
       } else {
         done();
       }
+    }).catch(function(e) {
+       if (options.failOnError && errors.length) {
+           done(new Error('Failed because of a stylelint error.\n'));
+       } else {
+         done();
+       }
+       console.log(chalk.red(e));
     });
 
     compilation.plugin && compilation.plugin('compilation', function(compilation) {
