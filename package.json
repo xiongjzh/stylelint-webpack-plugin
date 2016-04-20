@@ -41,6 +41,7 @@
   },
   "scripts": {
     "test": "mocha --harmony --full-trace --check-leaks",
-    "preversion": "npm run test"
+    "preversion": "npm run test",
+    "version": "git add -A ."
   }
 }
