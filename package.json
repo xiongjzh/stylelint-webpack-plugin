@@ -1,6 +1,6 @@
 {
   "name": "stylelint-webpack-plugin",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "stylelint plugin for webpack",
   "main": "index.js",
   "keywords": [
@@ -42,6 +42,7 @@
     "xo": "^0.16.0"
   },
   "scripts": {
+    "prepublish": "git push --follow-tags origin master",
     "pretest": "xo",
     "test": "nyc mocha",
     "preversion": "npm run test",
