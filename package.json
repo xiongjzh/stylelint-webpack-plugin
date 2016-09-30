@@ -42,7 +42,6 @@
     "xo": "^0.16.0"
   },
   "scripts": {
-    "prepublish": "git push --follow-tags origin master",
     "pretest": "xo",
     "test": "nyc mocha",
     "preversion": "npm run test",
