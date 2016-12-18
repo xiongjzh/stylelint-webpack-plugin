@@ -4,7 +4,7 @@
 var path = require('path');
 var arrify = require('arrify');
 var assign = require('object-assign');
-var formatter = require('stylelint/lib/formatters/stringFormatter');
+var formatter = require('stylelint').formatters.string;
 
 // Modules
 var runCompilation = require('./lib/run-compilation');
