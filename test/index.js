@@ -1,14 +1,13 @@
 'use strict';
 
 var assign = require('object-assign');
-var webpack = require('webpack');
 
 var StyleLintPlugin = require('../');
 var pack = require('./helpers/pack');
+var webpack = require('./helpers/webpack');
 
 var configFilePath = getPath('./.stylelintrc');
 var baseConfig = {
-  debug: false,
   output: {
     path: getPath('output')
   },
@@ -19,6 +18,16 @@ var baseConfig = {
     })
   ]
 };
+
+if (typeof webpack.LoaderOptionsPlugin === 'undefined') {
+  baseConfig.debug = false;
+} else {
+  baseConfig.plugins.push(
+    new webpack.LoaderOptionsPlugin({
+      debug: false
+    })
+  );
+}
 
 describe('stylelint-webpack-plugin', function () {
   it('works with a simple file', function () {
