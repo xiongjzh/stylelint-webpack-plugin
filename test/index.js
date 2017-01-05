@@ -5,29 +5,9 @@ var assign = require('object-assign');
 var StyleLintPlugin = require('../');
 var pack = require('./helpers/pack');
 var webpack = require('./helpers/webpack');
+var baseConfig = require('./helpers/base-config');
 
 var configFilePath = getPath('./.stylelintrc');
-var baseConfig = {
-  output: {
-    path: getPath('output')
-  },
-  plugins: [
-    new StyleLintPlugin({
-      quiet: true,
-      configFile: configFilePath
-    })
-  ]
-};
-
-if (typeof webpack.LoaderOptionsPlugin === 'undefined') {
-  baseConfig.debug = false;
-} else {
-  baseConfig.plugins.push(
-    new webpack.LoaderOptionsPlugin({
-      debug: false
-    })
-  );
-}
 
 describe('stylelint-webpack-plugin', function () {
   it('works with a simple file', function () {
