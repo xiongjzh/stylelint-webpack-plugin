@@ -60,4 +60,6 @@ You can use the `quiet` option to not print stylelint output to the console.
 This project is basically a modified version of `sasslint-webpack-plugin`. It changed considerably
 since stylelint is async, and its Node API changes compared with sasslint.
 
+Thanks to Javier ([@vieron](https://github.com/vieron)) for originally publishing this plugin, and passing the torch to our [growing list of contributors](https://github.com/JaKXz/stylelint-webpack-plugin/graphs/contributors)! :smile:
+
 ## [License](LICENSE)
