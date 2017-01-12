@@ -9,7 +9,7 @@ var formatter = require('stylelint').formatters.string;
 // Modules
 var runCompilation = require('./lib/run-compilation');
 
-function apply(options, compiler) {
+function apply (options, compiler) {
   options = options || {};
   var context = options.context || compiler.context;
 
@@ -28,7 +28,7 @@ function apply(options, compiler) {
   var runner = runCompilation.bind(this, options);
 
   compiler.plugin('run', runner);
-  compiler.plugin('watch-run', function onWatchRun(watcher, callback) {
+  compiler.plugin('watch-run', function onWatchRun (watcher, callback) {
     runner(watcher.compiler, callback);
   });
 }
@@ -39,7 +39,7 @@ function apply(options, compiler) {
  * @param options - from webpack config, see defaults in `apply` function.
  * @return {Object} the bound apply function
  */
-module.exports = function stylelintWebpackPlugin(options) {
+module.exports = function stylelintWebpackPlugin (options) {
   return {
     apply: apply.bind(this, options)
   };
