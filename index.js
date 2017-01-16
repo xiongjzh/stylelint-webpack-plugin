@@ -8,11 +8,11 @@ var formatter = require('stylelint').formatters.string;
 
 // Modules
 var runCompilation = require('./lib/run-compilation');
+var LintDirtyModulesPlugin = require('./lib/lint-dirty-modules-plugin');
 
 function apply (options, compiler) {
   options = options || {};
   var context = options.context || compiler.context;
-
   options = assign({
     formatter: formatter,
     quiet: false
@@ -27,10 +27,14 @@ function apply (options, compiler) {
 
   var runner = runCompilation.bind(this, options);
 
-  compiler.plugin('run', runner);
-  compiler.plugin('watch-run', function onWatchRun (watcher, callback) {
-    runner(watcher.compiler, callback);
-  });
+  if (options.lintDirtyModulesOnly) {
+    new LintDirtyModulesPlugin(compiler, options); // eslint-disable-line no-new
+  } else {
+    compiler.plugin('run', runner);
+    compiler.plugin('watch-run', function onWatchRun (watcher, callback) {
+      runner(watcher.compiler, callback);
+    });
+  }
 }
 
 /**

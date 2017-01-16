@@ -1,13 +1,13 @@
 'use strict';
 
 var assign = require('object-assign');
-
 var StyleLintPlugin = require('../');
 var pack = require('./helpers/pack');
 var webpack = require('./helpers/webpack');
 var baseConfig = require('./helpers/base-config');
 
 var configFilePath = getPath('./.stylelintrc');
+require('./lib/lint-dirty-modules-plugin');
 
 describe('stylelint-webpack-plugin', function () {
   it('works with a simple file', function () {
@@ -106,7 +106,8 @@ describe('stylelint-webpack-plugin', function () {
       entry: './index',
       plugins: [
         new StyleLintPlugin({
-          configFile: configFilePath
+          configFile: configFilePath,
+          quiet: true
         })
       ]
     };
@@ -176,5 +177,28 @@ describe('stylelint-webpack-plugin', function () {
       .catch(function (err) {
         expect(err.message).to.contain('Failed to parse').and.contain('as JSON');
       });
+  });
+
+  context('lintDirtyModulesOnly flag is enabled', function () {
+    it('skips linting on initial run', function () {
+      var config = {
+        context: './test/fixtures/test3',
+        entry: './index',
+        plugins: [
+          new StyleLintPlugin({
+            configFile: configFilePath,
+            quiet: true,
+            lintDirtyModulesOnly: true
+          }),
+          new webpack.NoErrorsPlugin()
+        ]
+      };
+
+      return pack(assign({}, baseConfig, config))
+        .then(function (stats) {
+          expect(stats.compilation.errors).to.have.length(0);
+          expect(stats.compilation.warnings).to.have.length(0);
+        });
+    });
   });
 });
