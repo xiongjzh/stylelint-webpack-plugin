@@ -1,12 +1,14 @@
 'use strict';
 
 var assign = require('object-assign');
+var td = require('testdouble');
 var StyleLintPlugin = require('../');
 var pack = require('./helpers/pack');
 var webpack = require('./helpers/webpack');
 var baseConfig = require('./helpers/base-config');
 
 var configFilePath = getPath('./.stylelintrc');
+var errorMessage = require('../lib/constants').errorMessage;
 
 describe('stylelint-webpack-plugin', function () {
   it('works with a simple file', function () {
@@ -51,7 +53,7 @@ describe('stylelint-webpack-plugin', function () {
     return pack(assign({}, baseConfig, config))
       .then(expect.fail)
       .catch(function (err) {
-        expect(err.message).to.equal('Failed because of a stylelint error.\n');
+        expect(err.message).to.equal(errorMessage);
       });
   });
 
@@ -82,26 +84,6 @@ describe('stylelint-webpack-plugin', function () {
       });
   });
 
-  // TODO use snapshots to ensure something is printed to the console
-  it.skip('sends messages to console when quiet prop set to false', function () {
-    var config = {
-      context: './test/fixtures/syntax-error',
-      entry: './index',
-      plugins: [
-        new StyleLintPlugin({
-          configFile: configFilePath,
-          quiet: true
-        })
-      ]
-    };
-
-    return pack(assign({}, baseConfig, config))
-      .then(function (stats) {
-        expect(stats.compilation.errors).to.have.length(1);
-        expect(stats.compilation.warnings).to.have.length(0);
-      });
-  });
-
   it('fails when .stylelintrc is not a proper format', function () {
     var config = {
       entry: './index',
@@ -119,6 +101,35 @@ describe('stylelint-webpack-plugin', function () {
       .catch(function (err) {
         expect(err.message).to.contain('Failed to parse').and.contain('as JSON');
       });
+  });
+
+  context('iff quiet is strictly false', function () {
+    beforeEach(function () {
+      td.replace(console, 'warn', td.function());
+    });
+
+    afterEach(function () {
+      td.reset();
+    });
+
+    it('sends messages to the console', function () {
+      var config = {
+        context: './test/fixtures/syntax-error',
+        entry: './index',
+        plugins: [
+          new StyleLintPlugin({
+            configFile: configFilePath,
+            quiet: false
+          })
+        ]
+      };
+
+      return pack(assign({}, baseConfig, config))
+        .then(function (stats) {
+          expect(stats.compilation.errors).to.have.length(1);
+          td.verify(console.warn(td.matchers.contains('✖')));
+        });
+    });
   });
 
   context('without StyleLintPlugin configuration', function () {
