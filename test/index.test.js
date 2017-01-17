@@ -7,12 +7,11 @@ var webpack = require('./helpers/webpack');
 var baseConfig = require('./helpers/base-config');
 
 var configFilePath = getPath('./.stylelintrc');
-require('./lib/lint-dirty-modules-plugin');
 
 describe('stylelint-webpack-plugin', function () {
   it('works with a simple file', function () {
     var config = {
-      context: './test/fixtures/test1',
+      context: './test/fixtures/lint-free',
       entry: './index'
     };
 
@@ -25,7 +24,7 @@ describe('stylelint-webpack-plugin', function () {
 
   it('sends errors to the errors output only', function () {
     var config = {
-      context: './test/fixtures/test3',
+      context: './test/fixtures/single-error',
       entry: './index'
     };
 
@@ -38,7 +37,7 @@ describe('stylelint-webpack-plugin', function () {
 
   it('fails on errors when asked to', function () {
     var config = {
-      context: './test/fixtures/test3',
+      context: './test/fixtures/single-error',
       entry: './index',
       plugins: [
         new StyleLintPlugin({
@@ -58,15 +57,15 @@ describe('stylelint-webpack-plugin', function () {
 
   it('works with multiple source files', function () {
     var config = {
-      context: './test/fixtures/test7',
+      context: './test/fixtures/multiple-sources',
       entry: './index'
     };
 
     return pack(assign({}, baseConfig, config))
       .then(function (stats) {
         expect(stats.compilation.errors).to.have.length(1);
-        expect(stats.compilation.errors[0]).to.contain('test/fixtures/test7/_second.scss');
-        expect(stats.compilation.errors[0]).to.contain('test/fixtures/test7/test.scss');
+        expect(stats.compilation.errors[0]).to.contain('test/fixtures/multiple-sources/_second.scss');
+        expect(stats.compilation.errors[0]).to.contain('test/fixtures/multiple-sources/test.scss');
       });
   });
 
@@ -80,22 +79,6 @@ describe('stylelint-webpack-plugin', function () {
       .then(function (stats) {
         expect(stats.compilation.errors).to.have.length(0);
         expect(stats.compilation.warnings).to.have.length(1);
-      });
-  });
-
-  it('works without StyleLintPlugin configuration but posts warning .stylelintrc file not found', function () {
-    var config = {
-      context: './test/fixtures/test9',
-      entry: './index',
-      plugins: [
-        new StyleLintPlugin()
-      ]
-    };
-
-    return pack(assign({}, baseConfig, config))
-      .then(function (stats) {
-        expect(stats.compilation.errors).to.have.length(0);
-        expect(stats.compilation.warnings).to.have.length(0);
       });
   });
 
@@ -119,10 +102,54 @@ describe('stylelint-webpack-plugin', function () {
       });
   });
 
+  it('fails when .stylelintrc is not a proper format', function () {
+    var config = {
+      entry: './index',
+      context: './test/fixtures/single-error',
+      plugins: [
+        new StyleLintPlugin({
+          configFile: getPath('./.badstylelintrc'),
+          quiet: true
+        })
+      ]
+    };
+
+    return pack(assign({}, baseConfig, config))
+      .then(expect.fail)
+      .catch(function (err) {
+        expect(err.message).to.contain('Failed to parse').and.contain('as JSON');
+      });
+  });
+
+  context('without StyleLintPlugin configuration', function () {
+    var config = {
+      context: './test/fixtures/lint-free',
+      entry: './index',
+      plugins: [
+        new StyleLintPlugin()
+      ]
+    };
+
+    it('works by using stylelint#cosmiconfig under the hood', function () {
+      return pack(assign({}, baseConfig, config))
+        .then(function (stats) {
+          expect(stats.compilation.errors).to.have.length(0);
+          expect(stats.compilation.warnings).to.have.length(0);
+        });
+    });
+
+    it('finds the right stylelintrc', function () {
+      return pack(assign({}, baseConfig, config, { context: './test/fixtures/rule-warning' }))
+        .then(function (stats) {
+          expect(stats.compilation.warnings).to.have.length(1);
+        });
+    });
+  });
+
   context('interop with NoErrorsPlugin', function () {
     it('works when failOnError is false', function () {
       var config = {
-        context: './test/fixtures/test3',
+        context: './test/fixtures/single-error',
         entry: './index',
         plugins: [
           new StyleLintPlugin({
@@ -139,9 +166,9 @@ describe('stylelint-webpack-plugin', function () {
         });
     });
 
-    it('throws when failOnError is true', function () {
+    context('when failOnError is true', function () {
       var config = {
-        context: './test/fixtures/test3',
+        context: './test/fixtures/single-error',
         entry: './index',
         plugins: [
           new StyleLintPlugin({
@@ -153,44 +180,34 @@ describe('stylelint-webpack-plugin', function () {
         ]
       };
 
-      return pack(assign({}, baseConfig, config))
-        .catch(function (err) {
-          expect(err).to.be.instanceof(Error);
-        });
-    });
-  });
-
-  it('fails when .stylelintrc is not a proper format', function () {
-    var config = {
-      entry: './index',
-      context: './test/fixtures/test3',
-      plugins: [
-        new StyleLintPlugin({
-          configFile: getPath('./.badstylelintrc'),
-          quiet: true
-        })
-      ]
-    };
-
-    return pack(assign({}, baseConfig, config))
-      .then(expect.fail)
-      .catch(function (err) {
-        expect(err.message).to.contain('Failed to parse').and.contain('as JSON');
+      it('throws when there is an error', function () {
+        return pack(assign({}, baseConfig, config))
+          .then(expect.fail)
+          .catch(function (err) {
+            expect(err).to.be.instanceof(Error);
+          });
       });
+
+      it('does not throw when there are only warnings', function () {
+        return pack(assign({}, baseConfig, config, { context: './test/fixtures/rule-warning' }))
+          .then(function (stats) {
+            expect(stats.compilation.warnings).to.have.length(1);
+          });
+      });
+    });
   });
 
   context('lintDirtyModulesOnly flag is enabled', function () {
     it('skips linting on initial run', function () {
       var config = {
-        context: './test/fixtures/test3',
+        context: './test/fixtures/single-error',
         entry: './index',
         plugins: [
           new StyleLintPlugin({
             configFile: configFilePath,
             quiet: true,
             lintDirtyModulesOnly: true
-          }),
-          new webpack.NoErrorsPlugin()
+          })
         ]
       };
 
