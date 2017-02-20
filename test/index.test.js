@@ -208,6 +208,48 @@ describe('stylelint-webpack-plugin', function () {
     });
   });
 
+  context('when `emitErrors` is disabled', function () {
+    it('emits errors as warnings when asked to', function () {
+      var config = {
+        context: './test/fixtures/single-error',
+        entry: './index',
+        plugins: [
+          new StyleLintPlugin({
+            configFile: configFilePath,
+            quiet: true,
+            emitErrors: false
+          })
+        ]
+      };
+
+      return pack(assign({}, baseConfig, config))
+        .then(function (stats) {
+          expect(stats.compilation.errors).to.have.length(0);
+          expect(stats.compilation.warnings).to.have.length(1);
+          expect(stats.compilation.warnings[0]).to.contain('✖');
+        });
+    });
+
+    it('still indicates that warnings are warnings to the user, even when emitting errors as warnings too', function () {
+      var config = {
+        context: './test/fixtures/rule-warning',
+        entry: './index',
+        plugins: [
+          new StyleLintPlugin({
+            configFile: configFilePath,
+            quiet: true,
+            emitErrors: false
+          })
+        ]
+      };
+
+      return pack(assign({}, baseConfig, config))
+        .then(function (stats) {
+          expect(stats.compilation.warnings[0]).to.contain('⚠');
+        });
+    });
+  });
+
   context('lintDirtyModulesOnly flag is enabled', function () {
     it('skips linting on initial run', function () {
       var config = {
@@ -218,6 +260,27 @@ describe('stylelint-webpack-plugin', function () {
             configFile: configFilePath,
             quiet: true,
             lintDirtyModulesOnly: true
+          })
+        ]
+      };
+
+      return pack(assign({}, baseConfig, config))
+        .then(function (stats) {
+          expect(stats.compilation.errors).to.have.length(0);
+          expect(stats.compilation.warnings).to.have.length(0);
+        });
+    });
+
+    it('still skips on initial run with `emitErrors` disabled', function () {
+      var config = {
+        context: './test/fixtures/single-error',
+        entry: './index',
+        plugins: [
+          new StyleLintPlugin({
+            configFile: configFilePath,
+            quiet: true,
+            lintDirtyModulesOnly: true,
+            emitErrors: false
           })
         ]
       };
