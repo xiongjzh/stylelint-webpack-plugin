@@ -13,8 +13,7 @@ var errorMessage = require('../lib/constants').errorMessage;
 describe('stylelint-webpack-plugin', function () {
   it('works with a simple file', function () {
     var config = {
-      context: './test/fixtures/lint-free',
-      entry: './index'
+      context: './test/fixtures/lint-free'
     };
 
     return pack(assign({}, baseConfig, config))
@@ -26,8 +25,7 @@ describe('stylelint-webpack-plugin', function () {
 
   it('sends errors to the errors output only', function () {
     var config = {
-      context: './test/fixtures/single-error',
-      entry: './index'
+      context: './test/fixtures/single-error'
     };
 
     return pack(assign({}, baseConfig, config))
@@ -40,7 +38,6 @@ describe('stylelint-webpack-plugin', function () {
   it('fails on errors when asked to', function () {
     var config = {
       context: './test/fixtures/single-error',
-      entry: './index',
       plugins: [
         new StyleLintPlugin({
           configFile: configFilePath,
@@ -59,8 +56,7 @@ describe('stylelint-webpack-plugin', function () {
 
   it('works with multiple source files', function () {
     var config = {
-      context: './test/fixtures/multiple-sources',
-      entry: './index'
+      context: './test/fixtures/multiple-sources'
     };
 
     return pack(assign({}, baseConfig, config))
@@ -73,8 +69,7 @@ describe('stylelint-webpack-plugin', function () {
 
   it('sends warnings properly', function () {
     var config = {
-      context: './test/fixtures/rule-warning',
-      entry: './index'
+      context: './test/fixtures/rule-warning'
     };
 
     return pack(assign({}, baseConfig, config))
@@ -86,7 +81,6 @@ describe('stylelint-webpack-plugin', function () {
 
   it('fails when .stylelintrc is not a proper format', function () {
     var config = {
-      entry: './index',
       context: './test/fixtures/single-error',
       plugins: [
         new StyleLintPlugin({
@@ -115,7 +109,6 @@ describe('stylelint-webpack-plugin', function () {
     it('sends messages to the console', function () {
       var config = {
         context: './test/fixtures/syntax-error',
-        entry: './index',
         plugins: [
           new StyleLintPlugin({
             configFile: configFilePath,
@@ -135,7 +128,6 @@ describe('stylelint-webpack-plugin', function () {
   context('without StyleLintPlugin configuration', function () {
     var config = {
       context: './test/fixtures/lint-free',
-      entry: './index',
       plugins: [
         new StyleLintPlugin()
       ]
@@ -161,7 +153,6 @@ describe('stylelint-webpack-plugin', function () {
     it('works when failOnError is false', function () {
       var config = {
         context: './test/fixtures/single-error',
-        entry: './index',
         plugins: [
           new StyleLintPlugin({
             configFile: configFilePath,
@@ -180,7 +171,6 @@ describe('stylelint-webpack-plugin', function () {
     context('when failOnError is true', function () {
       var config = {
         context: './test/fixtures/single-error',
-        entry: './index',
         plugins: [
           new StyleLintPlugin({
             configFile: configFilePath,
@@ -212,7 +202,6 @@ describe('stylelint-webpack-plugin', function () {
     it('emits errors as warnings when asked to', function () {
       var config = {
         context: './test/fixtures/single-error',
-        entry: './index',
         plugins: [
           new StyleLintPlugin({
             configFile: configFilePath,
@@ -233,7 +222,6 @@ describe('stylelint-webpack-plugin', function () {
     it('still indicates that warnings are warnings to the user, even when emitting errors as warnings too', function () {
       var config = {
         context: './test/fixtures/rule-warning',
-        entry: './index',
         plugins: [
           new StyleLintPlugin({
             configFile: configFilePath,
@@ -254,7 +242,6 @@ describe('stylelint-webpack-plugin', function () {
     it('skips linting on initial run', function () {
       var config = {
         context: './test/fixtures/single-error',
-        entry: './index',
         plugins: [
           new StyleLintPlugin({
             configFile: configFilePath,
@@ -274,7 +261,6 @@ describe('stylelint-webpack-plugin', function () {
     it('still skips on initial run with `emitErrors` disabled', function () {
       var config = {
         context: './test/fixtures/single-error',
-        entry: './index',
         plugins: [
           new StyleLintPlugin({
             configFile: configFilePath,
