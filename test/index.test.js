@@ -12,11 +12,7 @@ var errorMessage = require('../lib/constants').errorMessage;
 
 describe('stylelint-webpack-plugin', function () {
   it('works with a simple file', function () {
-    var config = {
-      context: './test/fixtures/lint-free'
-    };
-
-    return pack(assign({}, baseConfig, config))
+    return pack(assign({}, baseConfig, { context: './test/fixtures/lint-free' }))
       .then(function (stats) {
         expect(stats.compilation.errors).to.have.length(0);
         expect(stats.compilation.warnings).to.have.length(0);
@@ -24,14 +20,27 @@ describe('stylelint-webpack-plugin', function () {
   });
 
   it('sends errors to the errors output only', function () {
-    var config = {
-      context: './test/fixtures/single-error'
-    };
-
-    return pack(assign({}, baseConfig, config))
+    return pack(assign({}, baseConfig, { context: './test/fixtures/single-error' }))
       .then(function (stats) {
         expect(stats.compilation.errors).to.have.length(1, 'should have one error');
         expect(stats.compilation.warnings).to.have.length(0, 'should have no warnings');
+      });
+  });
+
+  it('works with multiple source files', function () {
+    return pack(assign({}, baseConfig, { context: './test/fixtures/multiple-sources' }))
+      .then(function (stats) {
+        expect(stats.compilation.errors).to.have.length(1);
+        expect(stats.compilation.errors[0]).to.contain('test/fixtures/multiple-sources/_second.scss');
+        expect(stats.compilation.errors[0]).to.contain('test/fixtures/multiple-sources/test.scss');
+      });
+  });
+
+  it('sends warnings properly', function () {
+    return pack(assign({}, baseConfig, { context: './test/fixtures/rule-warning' }))
+      .then(function (stats) {
+        expect(stats.compilation.errors).to.have.length(0);
+        expect(stats.compilation.warnings).to.have.length(1);
       });
   });
 
@@ -51,31 +60,6 @@ describe('stylelint-webpack-plugin', function () {
       .then(expect.fail)
       .catch(function (err) {
         expect(err.message).to.equal(errorMessage);
-      });
-  });
-
-  it('works with multiple source files', function () {
-    var config = {
-      context: './test/fixtures/multiple-sources'
-    };
-
-    return pack(assign({}, baseConfig, config))
-      .then(function (stats) {
-        expect(stats.compilation.errors).to.have.length(1);
-        expect(stats.compilation.errors[0]).to.contain('test/fixtures/multiple-sources/_second.scss');
-        expect(stats.compilation.errors[0]).to.contain('test/fixtures/multiple-sources/test.scss');
-      });
-  });
-
-  it('sends warnings properly', function () {
-    var config = {
-      context: './test/fixtures/rule-warning'
-    };
-
-    return pack(assign({}, baseConfig, config))
-      .then(function (stats) {
-        expect(stats.compilation.errors).to.have.length(0);
-        expect(stats.compilation.warnings).to.have.length(1);
       });
   });
 
