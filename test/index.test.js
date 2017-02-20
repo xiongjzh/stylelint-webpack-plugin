@@ -203,7 +203,7 @@ describe('stylelint-webpack-plugin', function () {
         });
     });
 
-    it('still indicates that warnings are warnings to the user, even when emitting errors as warnings too', function () {
+    it('still indicates that warnings are warnings, even when emitting errors as warnings too', function () {
       var config = {
         context: './test/fixtures/rule-warning',
         plugins: [
@@ -217,6 +217,8 @@ describe('stylelint-webpack-plugin', function () {
 
       return pack(assign({}, baseConfig, config))
         .then(function (stats) {
+          expect(stats.compilation.errors).to.have.length(0);
+          expect(stats.compilation.warnings).to.have.length(1);
           expect(stats.compilation.warnings[0]).to.contain('⚠');
         });
     });
