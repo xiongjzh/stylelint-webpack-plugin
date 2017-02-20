@@ -6,6 +6,7 @@ var webpack = require('./webpack');
 var configFilePath = getPath('./.stylelintrc');
 
 var baseConfig = {
+  entry: './index',
   output: {
     path: getPath('output')
   },
