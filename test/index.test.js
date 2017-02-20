@@ -2,11 +2,12 @@
 
 var assign = require('object-assign');
 var td = require('testdouble');
+
 var StyleLintPlugin = require('../');
+
 var pack = require('./helpers/pack');
 var webpack = require('./helpers/webpack');
 var baseConfig = require('./helpers/base-config');
-
 var configFilePath = getPath('./.stylelintrc');
 var errorMessage = require('../lib/constants').errorMessage;
 
