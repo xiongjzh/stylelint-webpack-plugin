@@ -14,6 +14,7 @@ var defaultFilesGlob = require('./lib/constants').defaultFilesGlob;
 function apply (options, compiler) {
   options = options || {};
   var context = options.context || compiler.context;
+
   options = assign({
     formatter: formatter
   }, options, {
@@ -25,14 +26,14 @@ function apply (options, compiler) {
     context: context
   });
 
-  var runner = runCompilation.bind(this, options);
-
   if (options.lintDirtyModulesOnly) {
     new LintDirtyModulesPlugin(compiler, options); // eslint-disable-line no-new
   } else {
+    var runner = runCompilation.bind(this, options);
+
     compiler.plugin('run', runner);
-    compiler.plugin('watch-run', function onWatchRun (watcher, callback) {
-      runner(watcher.compiler, callback);
+    compiler.plugin('watch-run', function onWatchRun (watcher, done) {
+      runner(watcher.compiler, done);
     });
   }
 }
