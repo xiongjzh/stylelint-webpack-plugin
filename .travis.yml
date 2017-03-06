@@ -8,6 +8,7 @@ node_js:
 cache: yarn
 
 env:
-  - COVERALLS_PARALLEL=true
+  global:
+    COVERALLS_PARALLEL: true
 
 after_success: "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
