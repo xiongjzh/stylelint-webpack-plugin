@@ -5,7 +5,6 @@
 [![Build Status](https://travis-ci.org/JaKXz/stylelint-webpack-plugin.svg?branch=master)](https://travis-ci.org/JaKXz/stylelint-webpack-plugin)
 [![Coverage Status](https://coveralls.io/repos/github/JaKXz/stylelint-webpack-plugin/badge.svg?branch=master)](https://coveralls.io/github/JaKXz/stylelint-webpack-plugin?branch=master)
 [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-red.svg)](https://github.com/Flet/semistandard)
-[![Gitter](https://badges.gitter.im/stylelint-webpack-plugin/Lobby.svg)](https://gitter.im/stylelint-webpack-plugin/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 > ## Why you might want to use this plugin instead of [stylelint-loader](https://github.com/adrianhall/stylelint-loader)
 
