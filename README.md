@@ -16,9 +16,9 @@ Instead, with **stylelint-webpack-plugin** you just define file globs, like styl
 ## Install
 
 ```bash
-npm install --save-dev stylelint-webpack-plugin
+npm install --save-dev stylelint stylelint-webpack-plugin
 # OR
-yarn add --dev stylelint-webpack-plugin
+yarn add --dev stylelint stylelint-webpack-plugin
 ```
 
 ## Usage
