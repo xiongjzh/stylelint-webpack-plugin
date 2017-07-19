@@ -37,8 +37,7 @@
     "arrify": "^1.0.1",
     "minimatch": "^3.0.3",
     "object-assign": "^4.1.0",
-    "ramda": "^0.24.1",
-    "stylelint": "^8.0.0"
+    "ramda": "^0.24.1"
   },
   "devDependencies": {
     "chai": "^4.0.2",
@@ -51,6 +50,7 @@
     "npm-run-all": "^4.0.2",
     "nyc": "^11.0.2",
     "semistandard": "^11.0.0",
+    "stylelint": "^8.0.0",
     "testdouble": "^3.0.0"
   },
   "scripts": {
