@@ -56,7 +56,6 @@
   "scripts": {
     "pretest": "semistandard",
     "test:webpack1": "WEBPACK_VERSION=1 nyc mocha",
-    "test:webpack2": "WEBPACK_VERSION=2 nyc mocha",
     "test:webpack3": "WEBPACK_VERSION=3 nyc mocha",
     "test": "run-s test:*",
     "preversion": "npm run test",
