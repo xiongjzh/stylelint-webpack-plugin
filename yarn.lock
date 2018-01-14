@@ -2717,7 +2717,7 @@ merge-source-map@^1.0.2:
   dependencies:
     source-map "^0.5.6"
 
-micromatch@^2.3.11:
+micromatch@^2.3.0, micromatch@^2.3.11:
   version "2.3.11"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-2.3.11.tgz#86677c97d1720b363431d04d0d15293bd38c1565"
   dependencies:
