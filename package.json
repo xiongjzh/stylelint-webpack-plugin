@@ -31,7 +31,7 @@
   "homepage": "https://github.com/JaKXz/stylelint-webpack-plugin#readme",
   "peerDependencies": {
     "stylelint": "^8.0.0",
-    "webpack": "^3 || ^2 || ^2.2.0-rc.0 || ^2.1.0-beta.0 || ^1.13.2"
+    "webpack": "^1.13.2 || ^2.7.0 || ^3.11.0 || ^4.4.0"
   },
   "dependencies": {
     "arrify": "^1.0.1",
@@ -58,6 +58,7 @@
     "pretest": "semistandard",
     "test:webpack1": "cross-env WEBPACK_VERSION=1 nyc mocha",
     "test:webpack3": "cross-env WEBPACK_VERSION=3 nyc mocha",
+    "test:webpack4": "cross-env WEBPACK_VERSION=4 nyc mocha",
     "test": "run-s test:*",
     "preversion": "npm run test",
     "version": "git add -A ."
