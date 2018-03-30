@@ -122,10 +122,13 @@ describe('stylelint-webpack-plugin', function () {
         plugins: [
           new StyleLintPlugin({
             configFile: configFilePath
-          }),
-          new webpack.NoErrorsPlugin()
+          })
         ]
       };
+
+      if (webpack.NoErrorsPlugin) {
+        config.plugins.push(new webpack.NoErrorsPlugin());
+      }
 
       return pack(assign({}, baseConfig, config))
         .then(function (stats) {
@@ -139,10 +142,13 @@ describe('stylelint-webpack-plugin', function () {
           new StyleLintPlugin({
             configFile: configFilePath,
             failOnError: true
-          }),
-          new webpack.NoErrorsPlugin()
+          })
         ]
       };
+
+      if (webpack.NoErrorsPlugin) {
+        config.plugins.push(new webpack.NoErrorsPlugin());
+      }
 
       it('throws when there is an error', function () {
         return pack(assign({}, baseConfig, config, { context: path.resolve('./test/fixtures/single-error') }))
