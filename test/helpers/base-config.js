@@ -27,4 +27,8 @@ if (typeof webpack.LoaderOptionsPlugin === 'undefined') {
   );
 }
 
+if (process.env.WEBPACK_VERSION === '4') {
+  baseConfig.mode = 'development';
+}
+
 module.exports = baseConfig;
