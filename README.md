@@ -1,67 +1,218 @@
-# Stylelint Plugin for Webpack [v[1, 3]](https://github.com/JaKXz/stylelint-webpack-plugin/blob/master/package.json#L58-L59)
+[![npm][npm]][npm-url]
+[![node][node]][node-url]
+[![deps][deps]][deps-url]
+[![tests][tests]][tests-url]
+[![coverage][cover]][cover-url]
+[![chat][chat]][chat-url]
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/JaKXz/stylelint-webpack-plugin.svg)](https://greenkeeper.io/)
-[![npm version](https://badge.fury.io/js/stylelint-webpack-plugin.svg)](https://badge.fury.io/js/stylelint-webpack-plugin)
-[![Build Status](https://travis-ci.org/JaKXz/stylelint-webpack-plugin.svg?branch=master)](https://travis-ci.org/JaKXz/stylelint-webpack-plugin)
-[![Coverage Status](https://coveralls.io/repos/github/JaKXz/stylelint-webpack-plugin/badge.svg?branch=master)](https://coveralls.io/github/JaKXz/stylelint-webpack-plugin?branch=master)
-[![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-red.svg)](https://github.com/Flet/semistandard)
+<div align="center">
+  <!-- replace with accurate logo e.g from https://worldvectorlogo.com/ -->
+  <img width="185" height="185" src="https://cdn.worldvectorlogo.com/logos/nodejs-icon.svg">
+  <a href="https://webpack.js.org/">
+    <img width="200" height="200" src="https://webpack.js.org/assets/icon-square-big.svg">
+  </a>
+  <h1>Stylelint Webpack Plugin</h1>
+  <p>stylelint plugin for webpack</p>
+</div>
 
-> ## Why you might want to use this plugin instead of [stylelint-loader](https://github.com/adrianhall/stylelint-loader)
-
-**stylelint-loader** lints the files you `require` or the ones you define as an `entry` in your webpack config. But `@imports` in those files are not followed, so just the main file (for each require/entry) is linted.
-
-Instead, with **stylelint-webpack-plugin** you just define file globs, like stylelint does by default. So you get all your files linted.
-
-
-## Install
+<h2 align="center">Install</h2>
 
 ```bash
-npm install --save-dev stylelint stylelint-webpack-plugin
-# OR
-yarn add --dev stylelint stylelint-webpack-plugin
+npm i -D stylelint-webpack-plugin
 ```
 
-## Usage
+<h2 align="center">Usage</h2>
 
-In your webpack configuration
+### `Usage 1`
 
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+**file.ext**
 ```js
-var StyleLintPlugin = require('stylelint-webpack-plugin');
+import file from 'file.ext';
+```
 
+<!-- isLoader ? use(this) : delete(isPlugin) -->
+**webpack.config.js**
+```js
 module.exports = {
-  // ...
-  plugins: [
-    new StyleLintPlugin(options),
-  ],
-  // ...
+  module: {
+    rules: [
+      {
+        test: /.ext$/,
+        use: [
+          {
+            loader: `stylelint-loader`,
+            options: {...options}
+          }
+        ]
+      }
+    ]
+  }
 }
 ```
 
-### Options
+<!-- isPlugin ? use(this) : delete(isLoader) -->
+**webpack.config.js**
+```js
+module.exports = {
+  plugins: [
+    new `Stylelint`Plugin(options)
+  ]
+}
+```
 
-See [stylelint options](http://stylelint.io/user-guide/node-api/#options) for the complete list of options. This object is passed straight to the `stylelint.lint` function and has the following defaults:
+<h2 align="center">Options</h2>
 
-* `configFile`: You can change the config file location. Default: (`undefined`), handled by [stylelint's cosmiconfig module](http://stylelint.io/user-guide/configuration/).
-* `context`: String indicating the root of your SCSS files. Default: inherits from webpack config.
-* `emitErrors`: Pipe stylelint 'error' severity messages to the error message handler in webpack's current instance. Note when this property is disabled (false) all stylelint messages are piped to webpack's warning message handler. Default: `true`
-* `failOnError`: Throw a fatal error in the global build process (e.g. kill your entire build process on any stylelint 'error' severity message). Default: `false`
-* `files`: Change the glob pattern for finding files. Must be relative to `options.context`. Default: `['**/*.s?(a|c)ss']`
-* `formatter`: Use a custom formatter to print errors to the console. Default: `require('stylelint').formatters.string`
-* `lintDirtyModulesOnly`: Lint only changed files, skip lint on start. Default: `false`
-* [`syntax`](https://stylelint.io/user-guide/node-api/#syntax): e.g. use `'scss'` to lint .scss files. Default: `undefined`
+|Name|Type|Default|Description|
+|:--:|:--:|:-----:|:----------|
+|**[`option1`](#option1)**|`{String}`|`/`|Lorem ipsum dolor sit amet...|
+|**[`option2`](#option2)**|`{Boolean}`|`true`|Lorem ipsum dolor sit amet...|
+|**[`option3`](#option3)**|`{Function|Object}`|`{}`|Lorem ipsum dolor sit amet...|
 
-## Errors
+### `Option 1`
 
-The plugin will dump full reporting of errors.
-Set `failOnError` to true if you want webpack build process breaking with any stylelint error.
-You can use the `quiet` option to not print stylelint output to the console.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+<!-- isLoader ? use(this) : delete(isPlugin) -->
+**webpack.config.js**
+```js
+{
+  loader: `stylelint-loader`,
+  options: {
+    option1: ''
+  }
+}
+```
+
+<!-- isPlugin ? use(this) : delete(isLoader) -->
+**webpack.config.js**
+```js
+new `Stylelint`Plugin({
+  option1: ''
+})
+```
+
+### `Option 2`
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+<!-- isLoader ? use(this) : delete(isPlugin) -->
+**webpack.config.js**
+```js
+{
+  loader: `stylelint-loader`,
+  options: {
+    option2: ''
+  }
+}
+```
+
+<!-- isPlugin ? use(this) : delete(isLoader) -->
+**webpack.config.js**
+```js
+new `Stylelint`Plugin({
+  option2: ''
+})
+```
+
+### `Option 3`
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+<!-- isLoader ? use(this) : delete(isPlugin) -->
+**webpack.config.js**
+```js
+{
+  loader: `stylelint-loader`,
+  options: {
+    option3: ''
+  }
+}
+```
+
+<!-- isPlugin ? use(this) : delete(isLoader) -->
+**webpack.config.js**
+```js
+new `Stylelint`Plugin({
+  option3: ''
+})
+```
+
+<h2 align="center">Examples</h2>
+
+### `Example 1`
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+**webpack.config.js**
+```js
+// Example setup here..
+```
+
+**file.ext**
+```js
+// Source code here...
+```
+
+**bundle.js**
+```js
+// Bundle code here...
+```
+
+<h2 align="center">Maintainers</h2>
+
+<!-- max 4 Maintainers per row -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center">
+        <a href="https://github.com/bebraw">
+          <img width="150" height="150" src="https://github.com/bebraw.png?v=3&s=150">
+          </br>
+          Juho Vepsäläinen
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/d3viant0ne">
+          <img width="150" height="150" src="https://github.com/d3viant0ne.png?v=3&s=150">
+          </br>
+          Joshua Wiens
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/michael-ciniawsky">
+          <img width="150" height="150" src="https://github.com/michael-ciniawsky.png?v=3&s=150">
+          </br>
+          Michael Ciniawsky
+        </a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/evilebottnawi">
+          <img width="150" height="150" src="https://github.com/evilebottnawi.png?v=3&s=150">
+          </br>
+          Alexander Krasnoyarov
+        </a>
+      </td>
+    </tr>
+  <tbody>
+</table>
 
 
-## Acknowledgement
+[npm]: https://img.shields.io/npm/v/stylelint-webpack-plugin.svg
+[npm-url]: https://npmjs.com/package/stylelint-webpack-plugin
 
-This project is basically a modified version of `sasslint-webpack-plugin`. It changed considerably
-since stylelint is async, and its Node API changes compared with sasslint.
+[node]: https://img.shields.io/node/v/stylelint-webpack-plugin.svg
+[node-url]: https://nodejs.org
 
-Thanks to Javier ([@vieron](https://github.com/vieron)) for originally publishing this plugin, and passing the torch to our [growing list of contributors](https://github.com/JaKXz/stylelint-webpack-plugin/graphs/contributors)! :smile:
+[deps]: https://david-dm.org/webpack-contrib/stylelint-webpack-plugin.svg
+[deps-url]: https://david-dm.org/webpack-contrib/stylelint-webpack-plugin
 
-## [License](LICENSE)
+[tests]: https://circleci.com/gh/webpack-contrib/stylelint-webpack-plugin.svg?style=svg
+[tests-url]: https://circleci.com/gh/webpack-contrib/stylelint-webpack-plugin
+
+[cover]: https://codecov.io/gh/webpack-contrib/stylelint-webpack-plugin/branch/master/graph/badge.svg
+[cover-url]: https://codecov.io/gh/webpack-contrib/stylelint-webpack-plugin
+
+[chat]: https://img.shields.io/badge/gitter-webpack%2Fwebpack-brightgreen.svg
+[chat-url]: https://gitter.im/webpack/webpack
