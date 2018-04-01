@@ -4,7 +4,7 @@
   "publishConfig": {
     "tag": "next"
   },
-  "description": "stylelint plugin for webpack",
+  "description": "A stylelint plugin for webpack",
   "license": "MIT",
   "repository": "webpack-contrib/stylelint-webpack-plugin",
   "author": "Javier Sánchez-Marín <javiersanchezmarin@gmail.com>",
